@@ -1,14 +1,12 @@
 <!-- omit in toc -->
-
 # Ruby on Rails Tutorial
 
 目次
 
-- [Ruby on Rails Tutorial](#ruby-on-rails-tutorial)
-  - [概要](#概要)
-  - [前提](#前提)
-  - [プロジェクト一覧](#プロジェクト一覧)
-    - [hello_app (第 1 章 ゼロからデプロイまで)](#hello_app-第-1-章-ゼロからデプロイまで)
+- [概要](#概要)
+- [前提](#前提)
+- [プロジェクト一覧](#プロジェクト一覧)
+  - [hello_app (第 1 章 ゼロからデプロイまで)](#hello_app-第-1-章-ゼロからデプロイまで)
 
 ## 概要
 
