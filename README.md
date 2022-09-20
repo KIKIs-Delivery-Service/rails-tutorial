@@ -6,54 +6,40 @@
 
 - [Ruby on Rails Tutorial](#ruby-on-rails-tutorial)
   - [概要](#概要)
-  - [第 1 章 ゼロからデプロイまで](#第-1-章-ゼロからデプロイまで)
-    - [環境構築](#環境構築)
-    - [最初のアプリを動かしてみる](#最初のアプリを動かしてみる)
+  - [前提](#前提)
+  - [プロジェクト一覧](#プロジェクト一覧)
+    - [hello_app (第 1 章 ゼロからデプロイまで)](#hello_app-第-1-章-ゼロからデプロイまで)
 
 ## 概要
 
-Ruby on Rails Tutorial に沿って行った作業のログや自分用メモを残していく
+Ruby on Rails Tutorial で扱うプロジェクトをコンテナ単位で分けている。  
+記載した手順を実行することでコンテナ経由で各環境にログインまたはアプリを起動することができる。  
+各環境で作った成果物については別リポジトリで管理する。
 
-## 第 1 章 ゼロからデプロイまで
+## 前提
+- Docker / docker-compose が使える環境であること
+- VS Code を使用していること
+- VS Code の拡張機能 Remote - Containers を入れていること
 
-### 環境構築
+## プロジェクト一覧
 
-1. 自分用 VPC 等の作成
-   - VPC 作成ワークフローを活用すればサブネットや igw などの諸々の設定を一気に自動構築してくれる
-2. Cloud9 構築
-   - Cloud9 コンソールの Create environment から環境作成
-   - Ubuntu を選択
-   - Preferences
-     - Soft Tabs: 4 → 2
-     - On Save, Strip Whitespace: enable
-     - Mark Unused Function Arguments: enable
-     - Format Code on Save: enable
-     - Keep Array Indentation: enable
-     - JSLint Strict Whitespace: enable
-3. Rails をインストールする
-   ```Shell
-   # インストールを短縮するため、Ruby ドキュメントは一緒にインストールしない設定にする
-   echo "gem: --no-document" >> ~/.gemrc
-   # RubyGems が提供する gem コマンドを使って Rails をインストール
-   gem install rails -v 6.0.4
-   # Rails のバージョンを確認
-   rails -v
-   # bundlergem のバージョンを指定してインストール
-   gem install bundler -v 2.2.17
-   # Cloud9 環境でディスク容量が不足しないよう、ワークスペース環境に容量を追加
-   source <(curl -sL https://cdn.learnenough.com/resize)
-   # JavaScript ソフトウェアの依存関係を管理する Yarn のインストール
-   source <(curl -sL https://cdn.learnenough.com/yarn_install)
-   ```
+### hello_app (第 1 章 ゼロからデプロイまで)
 
-### 最初のアプリを動かしてみる
+開発環境確認
+```shell
+cd hello_app
+code .
+# 上記実行後， [Reopen in Container] が VS Code 右下に表示されるのでクリック
+# ビルドされるまで数分〜10分ほど待つ
+```
 
-1. Rails プロジェクト用の environment ディレクトリを作る
-   ```Shell
-   cd                    # プロジェクトのホームディレクトリに移動
-   mkdir -p environment  # environmentディレクトリを作成
-   cd environment/       # 作成したenvironmentディレクトリに移動
-   ```
-2. rails newを実行する（バージョン番号を指定）
-   
-3. 
+サービス起動・確認
+```shell
+docker-compose up -d --build &&\
+docker-compose exec web rails server -b 0.0.0.0
+```
+
+後片付け
+```shell
+docker-compose down --rmi all --volumes --remove-orphans
+```
