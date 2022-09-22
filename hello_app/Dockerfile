@@ -1,9 +1,6 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
-# Add non-root user
-# RUN useradd -D railser && chown -R railser /rails-tutorial
-
-# Prefference
+# Prefferences
 ENV TZ Asia/Tokyo
 RUN echo 'export PS1="\u@docker \W 🐳 "' >> /root/.bashrc
 
@@ -16,11 +13,16 @@ WORKDIR /rails-tutorial/environment
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y && apt-get install -y \
     git curl tzdata
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - &&\
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - &&\
     apt-get install -y nodejs
 ## Yarn
-RUN corepack enable npm pnpm yarn
-RUN corepack prepare yarn@3.2.1 --activate
+RUN corepack enable npm pnpm yarn && \
+    corepack prepare yarn@1.22.19 --activate
+## Postgres
+RUN apt-get install -y \
+    postgresql postgresql-contrib libpq-dev
+## Heroku
+RUN curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 
 # Install rvm
 RUN curl -sSL https://get.rvm.io | bash
@@ -48,11 +50,13 @@ RUN rails _6.0.4_ new hello_app
 WORKDIR /rails-tutorial/environment/hello_app
 COPY Gemfile /rails-tutorial/environment/hello_app/Gemfile
 COPY package.json /rails-tutorial/environment/hello_app/package.json
-RUN bundle update && bundle _2.2.17_ install
-RUN yarn install
-RUN sed -i -e 's/check_yarn_integrity: true/check_yarn_integrity: false/g' config/webpacker.yml
-RUN rails webpacker:install
-RUN sed -i -e 's/check_yarn_integrity: true/check_yarn_integrity: false/g' config/webpacker.yml
+RUN  bundle _2.2.17_ config set --local without 'production' && \
+    bundle update && \
+    bundle _2.2.17_ install --path vendor/bundle
+RUN yarn install && \
+    yarn add jquery turbolinks @rails/ujs @rails/activestorage chanel
+RUN bundle update && \
+    rails webpacker:install
 
 # Run application
 # CMD [ "rails", "server", "-b", "0.0.0.0" ]
