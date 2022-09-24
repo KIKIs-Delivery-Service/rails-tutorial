@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   web:
-    container_name: rails-tutorial
+    container_name: rails-tutorial_hello_app
     build:
       context: .
       dockerfile: ./Dockerfile
