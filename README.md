@@ -30,6 +30,7 @@ Ruby on Rails Tutorial で扱うプロジェクトをコンテナ単位で分け
 
 - hello_app（第 1 章 ゼロからデプロイまで）
 - toy_app（第 2 章 Toy アプリケーション）
+- sample_app (第 3 章 ほぼ静的なページの作成)
 
 ## コンテナ実行手順
 
