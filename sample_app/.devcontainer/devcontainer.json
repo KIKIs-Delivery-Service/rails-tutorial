@@ -1,0 +1,21 @@
+{
+  "name": "rails-tutorial_sample_app",
+  "service": "web",
+  "workspaceFolder": "/rails-tutorial/environment/sample_app",
+  "dockerComposeFile": "../docker-compose.yml",
+  "settings": {
+    "editor.formatOnSave": true
+  },
+  "extensions": [
+    "rebornix.ruby",
+    "bung87.rails",
+    "hridoy.rails-snippets",
+    "aki77.rails-db-schema",
+    "sporto.rails-go-to-spec",
+    "kaiwood.endwise",
+    "oderwat.indent-rainbow",
+    "PKief.material-icon-theme",
+    "Arjun.swagger-viewer"
+  ],
+  "shutdownAction": "stopCompose"
+}
