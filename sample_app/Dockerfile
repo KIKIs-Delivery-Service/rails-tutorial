@@ -64,11 +64,11 @@ RUN /bin/bash -l -c "gem install bundler -v 2.2.17 --force"
 # Create application
 RUN rails _6.0.4_ new ${app_name}
 
-# # Setup application
+# Setup application
 WORKDIR /rails-tutorial/environment/${app_name}
 COPY Gemfile /rails-tutorial/environment/${app_name}/Gemfile
 COPY package.json /rails-tutorial/environment/${app_name}/package.json
-RUN  bundle _2.2.17_ config set --local without 'production' && \
+RUN bundle _2.2.17_ config set --local without 'production' && \
     bundle update && \
     bundle _2.2.17_ install --path vendor/bundle
 RUN yarn install && \
@@ -76,6 +76,9 @@ RUN yarn install && \
 RUN bundle update && \
     rails webpacker:install &&\
     rails webpacker:compile
+# Prevent error when you run 'bundle exec guard'
+ENV LANG C.UTF-8
+
 
 # Run application
 # CMD [ "rails", "server", "-b", "0.0.0.0" ]
